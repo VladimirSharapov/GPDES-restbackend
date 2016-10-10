@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <!-- web container application display names -->
+    <display-name>Vlad Web</display-name>
+
+    <!-- web container and application container description -->
+    <description>
+        Vlad web based user interface.
+    </description>
+
+    <!-- spring application context loader -->
+    <listener>
+        <description>
+            Spring dispatcher that is responsible for loading different spring contexts.
+        </description>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- spring application context loader -->
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>com.vladsh.main.web.config.AppConfig</param-value>
+    </context-param>
+
+    <listener>
+        <description>session lifecycle events</description>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+
+    <!-- provides some additional cleanup for spring managed resources -->
+    <listener>
+        <description>
+            This calls "Instrospector.flushCaches()" as well as doing some additional cleanup.
+        </description>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <!-- REST service front dispatcher setup -->
+    <servlet>
+        <servlet-name>api-mvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>com.vladsh.main.integration.config.AppRestConfig</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- Default 404 error mapping -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/api/error/404.jsp</location>
+    </error-page>
+
+    <!-- REST service front dispatcher mapping -->
+    <servlet-mapping>
+        <servlet-name>api-mvc</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- session time out in minutes -->
+    <session-config>
+        <session-timeout>120</session-timeout>
+    </session-config>
+
+    <!-- prevent the use of java code in any jsp pages -->
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jspx</url-pattern>
+            <scripting-invalid>true</scripting-invalid>
+            <is-xml>true</is-xml>
+        </jsp-property-group>
+    </jsp-config>
+
+    <!-- HUB-1282 -->
+    <mime-mapping>
+        <extension>html</extension>
+        <mime-type>text/html;charset=UTF-8</mime-type>
+    </mime-mapping>
+</web-app>

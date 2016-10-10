@@ -1,0 +1,12 @@
+rootProject.name = 'GPDES-restbackend'
+
+include 'core.base'
+
+include 'core.main'
+
+include 'main.integration'
+
+include 'main.web'
+
+include 'bl.module'
+

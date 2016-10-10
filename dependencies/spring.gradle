@@ -1,0 +1,99 @@
+// Dependencies for All Things Spring
+
+if (project.ext.has('spring')){
+    logger.debug 'Spring dependencies have already been configured.  Skipping redundant configuration.'
+    return
+}
+
+def springVersions = [
+
+    dataCommons:   '1.10.0.RELEASE',
+    dataEnvers:    '0.2.0.BUILD-SNAPSHOT',
+    dataJpa:       '1.8.0.RELEASE',
+ 
+    framework:     '4.1.6.RELEASE',
+
+    jackson:   '2.3.3',
+
+    // We will want to upgrade to 3.1.0 once the final draft is approved.   May want to upgrade alongside Tomcat.
+    javaxServlet: '3.0.1',
+    ldap:          '1.3.1.RELEASE',
+    commonsPool:   '1.6', 
+    security:      '3.2.4.RELEASE', 
+]
+
+project.ext.spring = [
+    framework: [
+        core: [ 
+	    'org.springframework:spring-core:'+springVersions.framework,
+            'org.springframework:spring-context:'+springVersions.framework, 
+            'org.springframework:spring-context-support:'+springVersions.framework
+	    ],
+        expression: [
+            'org.springframework:spring-expression:'+springVersions.framework
+        ],
+        persistence: [
+            'org.springframework:spring-orm:'+springVersions.framework,
+            'org.springframework:spring-jdbc:'+springVersions.framework,
+            'org.springframework:spring-tx:'+springVersions.framework,
+            'com.fasterxml.jackson.core:jackson-databind:'+springVersions.jackson,
+            'com.fasterxml.jackson.datatype:jackson-datatype-joda:'+springVersions.jackson,
+            'com.fasterxml.jackson.datatype:jackson-datatype-guava:'+springVersions.jackson
+        ],
+        security: [
+            'org.springframework.security:spring-security-core:'+springVersions.security,
+            'org.springframework.security:spring-security-config:'+springVersions.security,
+            'org.springframework.security:spring-security-web:'+springVersions.security
+        ],
+        oxm: [
+            'org.springframework:spring-oxm:'+springVersions.framework,
+			'com.fasterxml.jackson.core:jackson-databind:'+springVersions.jackson,
+			'com.fasterxml.jackson.datatype:jackson-datatype-joda:'+springVersions.jackson,
+			'com.fasterxml.jackson.datatype:jackson-datatype-guava:'+springVersions.jackson
+        ]
+    ],
+    aop: [
+        'org.springframework:spring-aop:'+springVersions.framework
+    ],
+    ldap: [
+        'org.springframework.ldap:spring-ldap:'+springVersions.ldap+':all', 
+        'commons-pool:commons-pool:'+springVersions.commonsPool
+    ],
+    jackson: [
+        'com.fasterxml.jackson.core:jackson-databind:'+springVersions.jackson,
+        'com.fasterxml.jackson.datatype:jackson-datatype-joda:'+springVersions.jackson,
+        'com.fasterxml.jackson.datatype:jackson-datatype-guava:'+springVersions.jackson
+    ], 
+    test: [
+        'org.springframework:spring-test:'+springVersions.framework
+    ],
+    tx: [
+        'org.springframework:spring-tx:'+springVersions.framework
+    ], 
+    data: [
+	'org.springframework.data:spring-data-commons:'+springVersions.dataCommons,
+        'org.springframework.data:spring-data-jpa:'+springVersions.dataJpa
+    ],
+    dataEnvers: [
+        'org.springframework.data:spring-data-envers:'+springVersions.dataEnvers
+    ],
+
+    beans: [        
+        'org.springframework:spring-beans:'+springVersions.framework
+    ],
+    core: [
+        'org.springframework:spring-core:'+springVersions.framework,
+    ], 
+    servletApi: [
+        'javax.servlet:javax.servlet-api:'+springVersions.javaxServlet
+	],
+    web: [
+        'org.springframework:spring-web:'+springVersions.framework,
+        'org.springframework:spring-webmvc:'+springVersions.framework,
+		'com.fasterxml.jackson.core:jackson-databind:'+springVersions.jackson,
+		'com.fasterxml.jackson.datatype:jackson-datatype-joda:'+springVersions.jackson,
+        'com.fasterxml.jackson.datatype:jackson-datatype-guava:'+springVersions.jackson,
+        'javax.servlet:javax.servlet-api:'+springVersions.javaxServlet
+    ]
+]
+

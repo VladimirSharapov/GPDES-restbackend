@@ -1,0 +1,5 @@
+dependencies {
+    compile project(":bl.module")
+    compile spring.framework.core
+    compile spring.web
+}

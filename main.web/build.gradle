@@ -1,0 +1,8 @@
+apply plugin: 'war'
+
+dependencies {
+    compile project(':core.base'),  project(':core.main')
+    compile project(':main.integration')
+    compile spring.framework.core
+    compile spring.framework.security
+}

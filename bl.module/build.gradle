@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':core.base'),  project(':core.main')
+    compile spring.framework.core
+    compile spring.web
+}
